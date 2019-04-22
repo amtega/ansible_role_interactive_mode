@@ -1,2 +1,8 @@
 ---
 # Role tasks
+
+- name: Disable interactive startup in /etc/sysconfig/init
+  lineinfile:
+    path: /etc/sysconfig/init
+    regexp: '^PROMPT='
+    line: 'PROMPT=no'
