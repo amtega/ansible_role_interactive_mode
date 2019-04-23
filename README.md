@@ -1,6 +1,6 @@
 # Ansible interactive_mode role
 
-This is an [Ansible](http://www.ansible.com) role which disables interactive startup 
+This is an [Ansible](http://www.ansible.com) role which configures interactive startup mode.
 
 ## Usage
 
@@ -12,11 +12,10 @@ This is an example playbook:
 - hosts: all
   roles:
     - role: interactive_mode
+      interactive_mode_enabled: no
 ```
 
 ## Testing
-
-<!-- A description of how to run tests of the role if available. For example: -->
 
 Tests are based on docker containers. You can setup docker engine quickly using the playbook `files/setup.yml` available in the role [amtega.docker_engine](https://galaxy.ansible.com/amtega/docker_engine).
 
