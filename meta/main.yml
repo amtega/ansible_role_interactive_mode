@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: interactive_mode
   author: Daniel Sánchez Fábregas
-  description: Disables interactive startup
+  description: Configure interactive startup mode
   company: AMTEGA - Xunta de Galicia
   license: GPLv3 or EUPL
   min_ansible_version: 2.7

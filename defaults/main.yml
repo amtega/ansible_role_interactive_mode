@@ -1,0 +1,6 @@
+---
+# Role default lower priority variables
+
+# Indicate if interactive mode startup is enabled or not
+
+interactive_mode_enabled: no

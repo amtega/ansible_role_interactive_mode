@@ -4,5 +4,8 @@
 - name: Disable interactive startup in /etc/sysconfig/init
   lineinfile:
     path: /etc/sysconfig/init
-    regexp: '^PROMPT='
-    line: 'PROMPT=no'
+    regexp: "^PROMPT="
+    line: "PROMPT={{ interactive_mode_value }}"
+  vars:
+    interactive_mode_value: >-
+      {{ (interactive_mode_enabled) | ternary("yes", "no") }}

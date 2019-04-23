@@ -17,27 +17,51 @@
   tags:
     - sandbox
 
-- name: Test services role
+- name: Test interactive mode disable
   hosts: docker_sandbox_containers
   tasks:
-    - name: setup test
+    - name: Check /etc/sysconfig/init file
+      stat:
+        path: /etc/sysconfig/init
+      register: check_sysconfig_init
+
+    - name: Setup test
       file:
         path: /etc/sysconfig/init
         owner: root
         group: root
         mode: 0644
         state: touch
+      when: not check_sysconfig_init.stat.exists
 
     - name: Disable interactive startup
       include_role:
         name: amtega.interactive_mode
+        public: yes
 
-    - name: Check wrappers
+    - name: Check interactive startup
       shell: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
+      changed_when: no
       loop:
         - 'PROMPT=no'
   tags:
     - idempotence
+
+- name: Test interactive mode enable
+  hosts: docker_sandbox_containers
+  tasks:
+    - name: Enable interactive startup
+      include_role:
+        name: amtega.interactive_mode
+        public: yes
+      vars:
+        interactive_mode_enabled: yes
+
+    - name: Check interactive startup
+      shell: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
+      changed_when: no
+      loop:
+        - 'PROMPT=yes'
 
 - name: Cleanup docker docker sandbox
   hosts: localhost
