@@ -1,10 +1,12 @@
+---
+
 galaxy_info:
   role_name: interactive_mode
   author: Daniel Sánchez Fábregas
   description: Configure interactive startup mode
   company: AMTEGA - Xunta de Galicia
   license: GPLv3 or EUPL
-  min_ansible_version: 2.7
+  min_ansible_version: 2.8
   platforms:
     - name: EL
       versions:
@@ -12,19 +14,13 @@ galaxy_info:
         - 7
     - name: Fedora
       versions:
-        - 27
-        - 28
         - 29
+        - 30
   galaxy_tags:
     - system
     - startup
 
 dependencies:
   - role: amtega.check_platform
-    vars:
-      check_platform_distributions:
-        centos: 6
-        fedora: 27
-        rhel: 6
     tags:
-      - role::interactive_mode
+      - never
