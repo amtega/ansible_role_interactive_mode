@@ -1,14 +1,6 @@
 ---
 # Role tasks
 
-- include_role:
-    name: amtega.check_platform
-  vars:
-    check_platform_distributions:
-      centos: 6
-      fedora: 27
-      rhel: 6
-
 - name: Disable interactive startup in /etc/sysconfig/init
   lineinfile:
     path: /etc/sysconfig/init
