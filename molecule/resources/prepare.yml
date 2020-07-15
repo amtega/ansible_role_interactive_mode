@@ -1,0 +1,19 @@
+---
+
+- name: Prepare
+  hosts: molecule_hosts
+  gather_facts: no
+  tasks:
+    - name: Check /etc/sysconfig/init file
+      stat:
+        path: /etc/sysconfig/init
+      register: check_sysconfig_init
+
+    - name: Setup test
+      file:
+        path: /etc/sysconfig/init
+        owner: root
+        group: root
+        mode: 0644
+        state: touch
+      when: not check_sysconfig_init.stat.exists
