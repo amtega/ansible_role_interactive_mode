@@ -5,7 +5,7 @@
   gather_facts: no
   tasks:
     - name: Check interactive startup
-      shell: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
+      command: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
       changed_when: no
       loop:
         - 'PROMPT=no'
