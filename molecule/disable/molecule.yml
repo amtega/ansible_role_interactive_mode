@@ -6,11 +6,12 @@ dependency:
   options:
     ignore-certs: yes
     ignore-errors: yes
-    role-file: "${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml"
-    requirements-file: "${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml"
+    role-file: "${MOLECULE_SCENARIO_DIRECTORY}/../resources/requirements.yml"
+    requirements-file: >-
+      ${MOLECULE_SCENARIO_DIRECTORY}/../resources/requirements.yml
 driver:
   name: docker
-lint: "${MOLECULE_SCENARIO_DIRECTORY}/linters.sh"
+lint: "${MOLECULE_SCENARIO_DIRECTORY}/../resources/linters.sh"
 platforms:
   - name: "centos6-${INSTANCE_UUID:-1}"
     image: quay.io/centos/centos:centos6
@@ -46,7 +47,9 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
+    cleanup: ../resources/cleanup.yml
     prepare: ../resources/prepare.yml
+    side_effect: ../resources/side_effect.yml
   config_options:
     defaults:
       callbacks_enabled: profile_tasks
