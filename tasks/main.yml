@@ -1,14 +1,14 @@
 ---
 # Role tasks
 
-- name: Setup interactive mode on initd systems
+- name: Setup interactive mode on initd
   include_tasks: init.yml
   when: ansible_facts.distribution_major_version is version("7", "<")
   tags:
     - role::interactive_mode
     - role::interactive_mode::initd
 
-- name: Setup interactive mode on systemd systems
+- name: Setup interactive mode on systemd
   include_tasks: systemd.yml
   when: ansible_facts.distribution_major_version is version("7", ">=")
   tags:
