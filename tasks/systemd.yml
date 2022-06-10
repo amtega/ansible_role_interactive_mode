@@ -1,0 +1,19 @@
+---
+# system.d based systems tasks
+
+- name: Activate interactive mode
+  include_role:
+    name: amtega.grub_options
+  when: interactive_mode_enabled
+  vars:
+    grub_options_present:
+      - "systemd.confirm_spawn=true"
+
+
+- name: Deactivate interactive mode
+  include_role:
+    name: amtega.grub_options
+  when: not interactive_mode_enabled
+  vars:
+    grub_options_adsent:
+      - "systemd.confirm_spawn=true"

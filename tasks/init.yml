@@ -1,0 +1,23 @@
+---
+# init.d based systems tasks
+
+- name: Check /etc/sysconfig/init
+  stat:
+    path: /etc/sysconfig/init
+  register: interactive_mode_stat_result
+
+- name: Setup /etc/sysconfig/init
+  file:
+    path: /etc/sysconfig/init
+    state: touch
+    mode: 0644
+  when: not interactive_mode_stat_result.stat.exists
+
+- name: Setup interactive startup in /etc/sysconfig/init
+  lineinfile:
+    path: /etc/sysconfig/init
+    regexp: "^PROMPT="
+    line: "PROMPT={{ interactive_mode_value }}"
+  vars:
+    interactive_mode_value: >-
+      {{ (interactive_mode_enabled) | ternary("yes", "no") }}
