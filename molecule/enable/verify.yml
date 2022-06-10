@@ -2,10 +2,27 @@
 
 - name: Verify
   hosts: molecule_hosts
-  gather_facts: no
+  gather_facts: yes
+  become: yes
   tasks:
-    - name: Check interactive startup
+    - name: Check init.d interactive startup
       command: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
       changed_when: no
+      when: ansible_facts.distribution_major_version is version("7", "<")
       loop:
-        - 'PROMPT=yes'
+        - "PROMPT=yes"
+
+    - block:
+        - name: Read grub config file
+          command: cat /boot/grub2/grub.cfg
+          changed_when: no
+          register: read_grub_config_result
+
+        - name: check systemd interactive startup
+          assert:
+            that:
+              - >-
+                read_grub_config_result.stdout
+                is search("systemd.confirm_spawn=true")
+
+      when: ansible_facts.distribution_major_version is version("7", ">=")

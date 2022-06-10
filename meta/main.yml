@@ -29,3 +29,9 @@ dependencies:
         centos: 6
         fedora: 34
         redhat: 6
+
+  - role: amtega.epel
+
+  - role: amtega.grub_options
+    tags:
+      - never
