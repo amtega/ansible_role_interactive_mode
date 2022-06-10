@@ -2,7 +2,7 @@
 # Role tasks
 
 - name: Setup interactive mode on initd
-  include_tasks: init.yml
+  include_tasks: initd.yml
   when: ansible_facts.distribution_major_version is version("7", "<")
   tags:
     - role::interactive_mode
