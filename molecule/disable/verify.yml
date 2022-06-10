@@ -10,7 +10,7 @@
       changed_when: no
       when: ansible_facts.distribution_major_version is version("7", "<")
       loop:
-        - 'PROMPT=no'
+        - "PROMPT=no"
 
     - block:
         - name: Read grub config file
