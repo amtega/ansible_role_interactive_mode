@@ -1,5 +1,4 @@
 ---
-# Role tasks
 
 - name: Setup interactive mode on initd
   include_tasks: initd.yml

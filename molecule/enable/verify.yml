@@ -6,23 +6,24 @@
   become: yes
   tasks:
     - name: Check init.d interactive startup
-      command: grep --fixed-strings "{{ item }}" /etc/sysconfig/init
+      ansible.builtin.command: >-
+        grep --fixed-strings "{{ item }}" /etc/sysconfig/init
       changed_when: no
       when: ansible_facts.distribution_major_version is version("7", "<")
       loop:
         - "PROMPT=yes"
 
-    - block:
+    - name: Verify interactive mode options
+      block:
         - name: Read grub config file
-          command: cat /boot/grub2/grub.cfg
+          ansible.builtin.command: cat /boot/grub2/grub.cfg
           changed_when: no
           register: read_grub_config_result
 
-        - name: check systemd interactive startup
-          assert:
+        - name: Check systemd interactive startup
+          ansible.builtin.assert:
             that:
               - >-
                 read_grub_config_result.stdout
                 is search("systemd.confirm_spawn=true")
-
       when: ansible_facts.distribution_major_version is version("7", ">=")
